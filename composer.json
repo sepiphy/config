@@ -1,9 +1,9 @@
 {
-    "name": "sepiphy/console",
-    "description": "The sepiphy/console package.",
+    "name": "sepiphy/config",
+    "description": "The sepiphy/config package.",
     "type": "library",
     "license": "MIT",
-    "keywords": ["sepiphy", "tools", "phptools", "console"],
+    "keywords": ["sepiphy", "tools", "phptools", "config"],
     "authors": [
         {
             "name": "Quynh Xuan Nguyen",
