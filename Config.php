@@ -11,8 +11,15 @@
 
 namespace Sepiphy\PHPTools\Config;
 
+use Symfony\Component\Finder\Finder;
+
 class Config implements ConfigInterface
 {
+    /**
+     * @var string
+     */
+    protected $paths = [];
+
     /**
      * @var array
      */
@@ -23,14 +30,53 @@ class Config implements ConfigInterface
         $this->items = $items;
     }
 
-    public function load(array $paths = []): void
+    /**
+     * {@inheritdoc}
+     */
+    public function all(): array
     {
-        //
+        return $this->items;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function get($key)
+    {
+        return $this->offsetGet($key);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function load($paths): void
+    {
+        foreach ($paths as $path) {
+            $path = realpath($path);
+
+            if (is_file($path)) {
+                $name = pathinfo($path, PATHINFO_FILENAME);
+                $this->items[$name] = require $path;
+                $this->paths[$name] = $path;
+                continue;
+            }
+
+            $finder = Finder::create()
+                ->files()
+                ->name('*.php')
+                ->in($path);
+
+            foreach ($finder as $file) {
+                $name = $file->getBasename('.php');
+                $this->items[$name] = require $file->getRealPath();
+                $this->paths[$name] = $file->getRealPath();
+            }
+        }
     }
 
     public function offsetExists($offset): bool
     {
-        return array_key_exists($offset, $this->items = []);
+        return array_key_exists($offset, $this->items);
     }
 
     public function offsetGet($offset)

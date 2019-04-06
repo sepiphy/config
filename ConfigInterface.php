@@ -16,8 +16,19 @@ use ArrayAccess;
 interface ConfigInterface extends ArrayAccess
 {
     /**
-     * @param string[] $paths The dirs or files to load.
+     * @return array
+     */
+    public function all(): array;
+
+    /**
+     * @param mixed $key
+     * @return mixed
+     */
+    public function get($key);
+
+    /**
+     * @param string|string[] $paths The dirs or files to load.
      * @return void
      */
-    public function load(array $paths = []): void;
+    public function load($paths): void;
 }

@@ -1,0 +1,34 @@
+{
+    "name": "sepiphy/console",
+    "description": "The sepiphy/console package.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["sepiphy", "tools", "phptools", "console"],
+    "authors": [
+        {
+            "name": "Quynh Xuan Nguyen",
+            "email": "seriquynh@gmail.com",
+            "homepage": "https://seriquynh.com",
+            "role": "Software Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.1.3",
+        "symfony/finder": "^4.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Sepiphy\\PHPTools\\Config\\": "./"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
