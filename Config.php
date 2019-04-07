@@ -83,31 +83,52 @@ class Config implements ConfigContract
             $finder = Finder::create()
                 ->files()
                 ->name('*.php')
-                ->in($path);
+                ->in($dir = $path)
+            ;
 
             foreach ($finder as $file) {
-                $name = $file->getBasename('.php');
-                $this->items[$name] = require $file->getRealPath();
-                $this->paths[$name] = $file->getRealPath();
+                $configFileDir = dirname($file->getRealPath());
+
+                if ($configFileDir === $dir) {
+                    $name = $file->getBasename('.php');
+                    $this->items[$name] = require $file->getRealPath();
+                    $this->paths[$name] = $file->getRealPath();
+                } else {
+                    $name = $file->getRelativePath().'/'.$file->getBasename('.php');
+                    $this->items[$name] = require $file->getRealPath();
+                    $this->paths[$name] = $file->getRealPath();
+                }
             }
         }
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function offsetExists($offset): bool
     {
         return $this->has($offset);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function offsetGet($offset)
     {
         return $this->get($offset);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function offsetSet($offset, $value): void
     {
         $this->set($offset, $value);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function offsetUnset($offset): void
     {
         if ($this->offsetExists($offset)) {
