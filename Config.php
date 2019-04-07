@@ -33,7 +33,17 @@ class Config implements ConfigContract
      */
     public static function env(string $key, $fallback = null)
     {
-        $value = $_SERVER[$key] ?? $_ENV[$key] ?? $fallback;
+        if (array_key_exists($key, $_SERVER)) {
+            $value = $_SERVER[$key];
+        } elseif (array_key_exists($key, $_ENV)) {
+            $value = $_ENV[$key];
+        } else {
+            return $fallback;
+        }
+
+        if (! is_string($value)) {
+            return $value;
+        }
 
         switch (strtolower($value)) {
             case 'true':
@@ -48,9 +58,9 @@ class Config implements ConfigContract
             case 'null':
             case '(null)':
                 return null;
+            default:
+                return $value;
         }
-
-        return $value;
     }
 
     /**
