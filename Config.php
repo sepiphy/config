@@ -12,8 +12,9 @@
 namespace Sepiphy\PHPTools\Config;
 
 use Symfony\Component\Finder\Finder;
+use Sepiphy\PHPTools\Contracts\Config\ConfigContract;
 
-class Config implements ConfigInterface
+class Config implements ConfigContract
 {
     /**
      * @var string
@@ -41,9 +42,27 @@ class Config implements ConfigInterface
     /**
      * {@inheritdoc}
      */
-    public function get($key)
+    public function has($key): bool
     {
-        return $this->offsetGet($key);
+        return array_key_exists($key, $this->items);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function get($key, $fallback = null)
+    {
+        return $this->has($key) ? $this->items[$key] : $fallback;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function set($key, $value): self
+    {
+        $this->items[$key] = $value;
+
+        return $this;
     }
 
     /**
@@ -76,17 +95,17 @@ class Config implements ConfigInterface
 
     public function offsetExists($offset): bool
     {
-        return array_key_exists($offset, $this->items);
+        return $this->has($offset);
     }
 
     public function offsetGet($offset)
     {
-        return $this->offsetExists($offset) ? $this->items[$offset] : null;
+        return $this->get($offset);
     }
 
     public function offsetSet($offset, $value): void
     {
-        $this->items[$offset] = $value;
+        $this->set($offset, $value);
     }
 
     public function offsetUnset($offset): void
