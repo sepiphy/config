@@ -27,6 +27,33 @@ class Config implements ConfigContract
     protected $items = [];
 
     /**
+     * @param string $key
+     * @param mixed $fallback
+     * @return mixed
+     */
+    public static function env(string $key, $fallback = null)
+    {
+        $value = $_SERVER[$key] ?? $_ENV[$key] ?? $fallback;
+
+        switch (strtolower($value)) {
+            case 'true':
+            case '(true)':
+                return true;
+            case 'false':
+            case '(false)':
+                return false;
+            case 'empty':
+            case '(empty)':
+                return '';
+            case 'null':
+            case '(null)':
+                return null;
+        }
+
+        return $value;
+    }
+
+    /**
      * @param array $items
      */
     public function __construct(array $items = [])
