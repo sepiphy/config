@@ -70,6 +70,8 @@ class Config implements ConfigContract
      */
     public function load($paths): void
     {
+        $paths = (array) $paths;
+
         foreach ($paths as $path) {
             $path = realpath($path);
 
