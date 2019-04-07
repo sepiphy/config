@@ -26,6 +26,9 @@ class Config implements ConfigContract
      */
     protected $items = [];
 
+    /**
+     * @param array $items
+     */
     public function __construct(array $items = [])
     {
         $this->items = $items;
@@ -42,25 +45,25 @@ class Config implements ConfigContract
     /**
      * {@inheritdoc}
      */
-    public function has($key): bool
+    public function has(string $key): bool
     {
-        return array_key_exists($key, $this->items);
+        return $this->hasItemsKey($this->items, $key);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function get($key, $fallback = null)
+    public function get(string $key, $fallback = null)
     {
-        return $this->has($key) ? $this->items[$key] : $fallback;
+        return $this->getItemsKey($this->items, $key, $fallback);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function set($key, $value): self
+    public function set(string $key, $value): self
     {
-        $this->items[$key] = $value;
+        $this->setItemsKey($this->items, $key, $value);
 
         return $this;
     }
@@ -136,5 +139,73 @@ class Config implements ConfigContract
         if ($this->offsetExists($offset)) {
             unset($this->items[$offset]);
         }
+    }
+
+    /**
+     * @param array $items
+     * @param string $key
+     * @return bool
+     */
+    protected function hasItemsKey(array $items, string $key): bool
+    {
+        if (array_key_exists($key, $items)) {
+            return true;
+        }
+
+        if (strpos($key, '.') > 0) {
+            [$left, $right] = explode('.', $key, 2);
+
+            if (array_key_exists($left, $items) && is_array($items[$left])) {
+                return $this->hasItemsKey($items[$left], $right);
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param array $items
+     * @param string $key
+     * @param mixed $fallback
+     * @return bool
+     */
+    protected function getItemsKey(array $items, string $key, $fallback = null)
+    {
+        if (array_key_exists($key, $items)) {
+            return $items[$key];
+        }
+
+        if (strpos($key, '.') > 0) {
+            [$left, $right] = explode('.', $key, 2);
+
+            if (array_key_exists($left, $items) && is_array($items[$left])) {
+                return $this->getItemsKey($items[$left], $right, $fallback);
+            }
+        }
+
+        return $fallback;
+    }
+
+    /**
+     * @param array $items
+     * @param string $key
+     * @param mixed $value
+     * @return void
+     */
+    protected function setItemsKey(array &$items, string $key, $value): void
+    {
+        if (strpos($key, '.') > 0) {
+            [$left, $right] = explode('.', $key, 2);
+
+            if (array_key_exists($left, $items) && is_array($items[$left])) {
+                $this->setItemsKey($items[$left], $right, $value);
+            } else {
+                $items[$left] = [];
+
+                $this->setItemsKey($items[$left], $right, $value);
+            }
+        }
+
+        $items[$key] = $value;
     }
 }

@@ -1,9 +1,14 @@
 {
     "name": "sepiphy/config",
     "description": "The \"sepiphy/config\" package.",
+    "keywords": ["sepiphy", "tools", "phptools", "config"],
     "type": "library",
     "license": "MIT",
-    "keywords": ["sepiphy", "tools", "phptools", "config"],
+    "homepage": "https://github.com/sepiphy/phptools",
+    "support": {
+        "issues": "https://github.com/sepiphy/phptools/issues",
+        "source": "https://github.com/sepiphy/phptools"
+    },
     "authors": [
         {
             "name": "Quynh Xuan Nguyen",
