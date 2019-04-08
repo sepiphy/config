@@ -19,6 +19,7 @@
     ],
     "require": {
         "php": "^7.1.3",
+        "sepiphy/contracts": "dev-master",
         "symfony/finder": "^4.2"
     },
     "autoload": {
