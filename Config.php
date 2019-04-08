@@ -11,15 +11,16 @@
 
 namespace Sepiphy\PHPTools\Config;
 
-use Symfony\Component\Finder\Finder;
+use Sepiphy\PHPTools\Config\Loaders\PhpLoader;
 use Sepiphy\PHPTools\Contracts\Config\ConfigContract;
+use Sepiphy\PHPTools\Contracts\Config\LoaderContract;
 
 class Config implements ConfigContract
 {
     /**
-     * @var string
+     * @var LoaderContract
      */
-    protected $paths = [];
+    protected $loader;
 
     /**
      * @var array
@@ -65,10 +66,12 @@ class Config implements ConfigContract
 
     /**
      * @param array $items
+     * @param LoaderContract $loader
      */
-    public function __construct(array $items = [])
+    public function __construct(array $items = [], LoaderContract $loader = null)
     {
         $this->items = $items;
+        $this->loader = $loader ?: new PhpLoader;
     }
 
     /**
@@ -108,40 +111,9 @@ class Config implements ConfigContract
     /**
      * {@inheritdoc}
      */
-    public function load($paths): void
+    public function load($resources): void
     {
-        $paths = (array) $paths;
-
-        foreach ($paths as $path) {
-            $path = realpath($path);
-
-            if (is_file($path)) {
-                $name = pathinfo($path, PATHINFO_FILENAME);
-                $this->items[$name] = require $path;
-                $this->paths[$name] = $path;
-                continue;
-            }
-
-            $finder = Finder::create()
-                ->files()
-                ->name('*.php')
-                ->in($dir = $path)
-            ;
-
-            foreach ($finder as $file) {
-                $configFileDir = dirname($file->getRealPath());
-
-                if ($configFileDir === $dir) {
-                    $name = $file->getBasename('.php');
-                    $this->items[$name] = require $file->getRealPath();
-                    $this->paths[$name] = $file->getRealPath();
-                } else {
-                    $name = $file->getRelativePath().'/'.$file->getBasename('.php');
-                    $this->items[$name] = require $file->getRealPath();
-                    $this->paths[$name] = $file->getRealPath();
-                }
-            }
-        }
+        $this->items = array_merge($this->items, $this->loader->load($resources));
     }
 
     /**
@@ -176,6 +148,25 @@ class Config implements ConfigContract
         if ($this->offsetExists($offset)) {
             unset($this->items[$offset]);
         }
+    }
+
+    /**
+     * @return LoaderContract
+     */
+    public function getLoader(): LoaderContract
+    {
+        return $this->loader;
+    }
+
+    /**
+     * @param LoaderContract $loader
+     * @return self
+     */
+    public function setLoader(LoaderContract $loader): self
+    {
+        $this->loader = $loader;
+
+        return $this;
     }
 
     /**
