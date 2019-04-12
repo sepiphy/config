@@ -38,9 +38,9 @@ class PhpLoader extends Loader
             $finder = $this->filterFiles($dir = $path);
 
             foreach ($finder as $file) {
-                $configFileDir = dirname($file->getRealPath());
-
                 $name = $file->getBasename('.php');
+
+                $configFileDir = dirname($file->getRealPath());
 
                 if ($configFileDir === $dir) {
                     $items[$name] = require $file->getRealPath();
