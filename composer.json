@@ -24,7 +24,7 @@
     },
     "autoload": {
         "files": [
-            "helpers.php"
+            "functions.php"
         ],
         "psr-4": {
             "Sepiphy\\PHPTools\\Config\\": "./"
