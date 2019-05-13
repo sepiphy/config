@@ -12,9 +12,7 @@
     "authors": [
         {
             "name": "Quynh Xuan Nguyen",
-            "email": "seriquynh@gmail.com",
-            "homepage": "https://seriquynh.com",
-            "role": "Software Developer"
+            "email": "seriquynh@gmail.com"
         }
     ],
     "require": {
