@@ -9,14 +9,41 @@
  * file that was distributed with this source code.
  */
 
-use Sepiphy\PHPTools\Config\Config;
-
 if (! function_exists('env')) {
     /**
-     * @see Config::env()
+     * @param string $key
+     * @param mixed $fallback
+     * @return mixed
      */
     function env(string $key, $fallback = null)
     {
-        return Config::env($key, $fallback);
+        if (array_key_exists($key, $_SERVER)) {
+            $value = $_SERVER[$key];
+        } elseif (array_key_exists($key, $_ENV)) {
+            $value = $_ENV[$key];
+        } else {
+            return $fallback;
+        }
+
+        if (! is_string($value)) {
+            return $value;
+        }
+
+        switch (strtolower($value)) {
+            case 'true':
+            case '(true)':
+                return true;
+            case 'false':
+            case '(false)':
+                return false;
+            case 'empty':
+            case '(empty)':
+                return '';
+            case 'null':
+            case '(null)':
+                return null;
+            default:
+                return $value;
+        }
     }
 }

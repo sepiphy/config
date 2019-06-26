@@ -28,43 +28,6 @@ class Config implements ConfigContract
     protected $items = [];
 
     /**
-     * @param string $key
-     * @param mixed $fallback
-     * @return mixed
-     */
-    public static function env(string $key, $fallback = null)
-    {
-        if (array_key_exists($key, $_SERVER)) {
-            $value = $_SERVER[$key];
-        } elseif (array_key_exists($key, $_ENV)) {
-            $value = $_ENV[$key];
-        } else {
-            return $fallback;
-        }
-
-        if (! is_string($value)) {
-            return $value;
-        }
-
-        switch (strtolower($value)) {
-            case 'true':
-            case '(true)':
-                return true;
-            case 'false':
-            case '(false)':
-                return false;
-            case 'empty':
-            case '(empty)':
-                return '';
-            case 'null':
-            case '(null)':
-                return null;
-            default:
-                return $value;
-        }
-    }
-
-    /**
      * @param array $items
      * @param LoaderContract $loader
      */
