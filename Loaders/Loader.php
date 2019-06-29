@@ -12,9 +12,9 @@
 namespace Sepiphy\PHPTools\Config\Loaders;
 
 use Symfony\Component\Finder\Finder;
-use Sepiphy\PHPTools\Contracts\Config\LoaderContract;
+use Sepiphy\PHPTools\Contracts\Config\LoaderInterface;
 
-abstract class Loader implements LoaderContract
+abstract class Loader implements LoaderInterface
 {
     /**
      * @param string $dir

@@ -12,13 +12,13 @@
 namespace Sepiphy\PHPTools\Config;
 
 use Sepiphy\PHPTools\Config\Loaders\PhpLoader;
-use Sepiphy\PHPTools\Contracts\Config\ConfigContract;
-use Sepiphy\PHPTools\Contracts\Config\LoaderContract;
+use Sepiphy\PHPTools\Contracts\Config\ConfigInterface;
+use Sepiphy\PHPTools\Contracts\Config\LoaderInterface;
 
-class Config implements ConfigContract
+class Config implements ConfigInterface
 {
     /**
-     * @var LoaderContract
+     * @var LoaderInterface
      */
     protected $loader;
 
@@ -29,9 +29,9 @@ class Config implements ConfigContract
 
     /**
      * @param array $items
-     * @param LoaderContract $loader
+     * @param LoaderInterface $loader
      */
-    public function __construct(array $items = [], LoaderContract $loader = null)
+    public function __construct(array $items = [], LoaderInterface $loader = null)
     {
         $this->items = $items;
         $this->loader = $loader ?: new PhpLoader;
@@ -114,18 +114,18 @@ class Config implements ConfigContract
     }
 
     /**
-     * @return LoaderContract
+     * @return LoaderInterface
      */
-    public function getLoader(): LoaderContract
+    public function getLoader(): LoaderInterface
     {
         return $this->loader;
     }
 
     /**
-     * @param LoaderContract $loader
+     * @param LoaderInterface $loader
      * @return self
      */
-    public function setLoader(LoaderContract $loader): self
+    public function setLoader(LoaderInterface $loader): self
     {
         $this->loader = $loader;
 
