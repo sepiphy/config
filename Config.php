@@ -34,7 +34,7 @@ class Config implements ConfigInterface
     public function __construct(array $items = [], LoaderInterface $loader = null)
     {
         $this->items = $items;
-        $this->loader = $loader ?: new PhpLoader;
+        $this->loader = $loader ?: new PhpLoader();
     }
 
     /**
