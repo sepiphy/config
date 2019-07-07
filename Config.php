@@ -30,6 +30,7 @@ class Config implements ConfigInterface
     /**
      * @param array $items
      * @param LoaderInterface $loader
+     * @return void
      */
     public function __construct(array $items = [], LoaderInterface $loader = null)
     {
