@@ -11,8 +11,8 @@
 
 namespace Sepiphy\PHPTools\Config\Loaders;
 
-use Symfony\Component\Finder\Finder;
 use Sepiphy\PHPTools\Contracts\Config\LoaderInterface;
+use Symfony\Component\Finder\Finder;
 
 abstract class Loader implements LoaderInterface
 {
