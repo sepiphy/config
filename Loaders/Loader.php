@@ -17,6 +17,8 @@ use Symfony\Component\Finder\Finder;
 abstract class Loader implements LoaderInterface
 {
     /**
+     * Filter files with a specific extension in the given directory.
+     *
      * @param string $dir
      * @param string $ext
      * @return Finder

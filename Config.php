@@ -15,21 +15,30 @@ use Sepiphy\PHPTools\Config\Loaders\PhpLoader;
 use Sepiphy\PHPTools\Contracts\Config\ConfigInterface;
 use Sepiphy\PHPTools\Contracts\Config\LoaderInterface;
 
+/**
+ * @author Quynh Xuan Nguyen <seriquynh@gmail.com>
+ */
 class Config implements ConfigInterface
 {
     /**
+     * The LoaderInterface implementation.
+     *
      * @var LoaderInterface
      */
     protected $loader;
 
     /**
+     * The configuration items.
+     *
      * @var array
      */
     protected $items = [];
 
     /**
+     * Create a new Config instance.
+     *
      * @param array $items
-     * @param LoaderInterface $loader
+     * @param LoaderInterface|null $loader
      * @return void
      */
     public function __construct(array $items = [], LoaderInterface $loader = null)
@@ -115,6 +124,8 @@ class Config implements ConfigInterface
     }
 
     /**
+     * Get the LoaderInterface implementation.
+     *
      * @return LoaderInterface
      */
     public function getLoader(): LoaderInterface
@@ -123,6 +134,8 @@ class Config implements ConfigInterface
     }
 
     /**
+     * Set the LoaderInterface implementation.
+     *
      * @param LoaderInterface $loader
      * @return self
      */
@@ -134,6 +147,8 @@ class Config implements ConfigInterface
     }
 
     /**
+     * Determine whether the items has the given key.
+     *
      * @param array $items
      * @param string $key
      * @return bool
@@ -156,6 +171,8 @@ class Config implements ConfigInterface
     }
 
     /**
+     * Get a value in items by the given key.
+     *
      * @param array $items
      * @param string $key
      * @param mixed $fallback
@@ -179,6 +196,8 @@ class Config implements ConfigInterface
     }
 
     /**
+     * Set the key, value into the items.
+     *
      * @param array $items
      * @param string $key
      * @param mixed $value

@@ -21,9 +21,6 @@
         "symfony/finder": "^4.3"
     },
     "autoload": {
-        "files": [
-            "functions.php"
-        ],
         "psr-4": {
             "Sepiphy\\PHPTools\\Config\\": "./"
         }
@@ -32,6 +29,9 @@
         "branch-alias": {
             "dev-master": "1.0-dev"
         }
+    },
+    "suggest": {
+        "illuminate/support": "Required to use the env function (^5.8)."
     },
     "config": {
         "sort-packages": true
