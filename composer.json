@@ -31,7 +31,8 @@
         }
     },
     "suggest": {
-        "illuminate/support": "Required to use the env function (^5.8)."
+        "illuminate/support": "Required to use the env function (^5.8).",
+        "symfony/yaml": "Required to use yaml configuration files (^4.3)."
     },
     "config": {
         "sort-packages": true

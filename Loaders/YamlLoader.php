@@ -11,10 +11,12 @@
 
 namespace Sepiphy\PHPTools\Config\Loaders;
 
+use Symfony\Component\Yaml\Yaml;
+
 /**
  * @author Quynh Xuan Nguyen <seriquynh@gmail.com>
  */
-class PhpLoader extends Loader
+class YamlLoader extends Loader
 {
     /**
      * {@inheritdoc}
@@ -34,21 +36,35 @@ class PhpLoader extends Loader
 
             if (is_file($path)) {
                 $name = pathinfo($path, PATHINFO_FILENAME);
-                $items[$name] = require $path;
+                $items[$name] = Yaml::parseFile($path);
                 continue;
             }
 
-            $finder = $this->filterFiles($dir = $path);
+            $finder = $this->filterFiles($dir = $path, '.yml');
 
             foreach ($finder as $file) {
-                $name = $file->getBasename('.php');
+                $name = $file->getBasename('.yml');
 
                 $configFileDir = dirname($file->getRealPath());
 
                 if ($configFileDir === $dir) {
-                    $items[$name] = require $file->getRealPath();
+                    $items[$name] = Yaml::parseFile($file->getRealPath());
                 } else {
-                    $items[$file->getRelativePath()][$name] = require $file->getRealPath();
+                    $items[$file->getRelativePath()][$name] = Yaml::parseFile($file->getRealPath());
+                }
+            }
+
+            $finder = $this->filterFiles($dir = $path, '.yaml');
+
+            foreach ($finder as $file) {
+                $name = $file->getBasename('.yaml');
+
+                $configFileDir = dirname($file->getRealPath());
+
+                if ($configFileDir === $dir) {
+                    $items[$name] = Yaml::parseFile($file->getRealPath());
+                } else {
+                    $items[$file->getRelativePath()][$name] = Yaml::parseFile($file->getRealPath());
                 }
             }
         }

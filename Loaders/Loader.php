@@ -14,21 +14,28 @@ namespace Sepiphy\PHPTools\Config\Loaders;
 use Sepiphy\PHPTools\Contracts\Config\LoaderInterface;
 use Symfony\Component\Finder\Finder;
 
+/**
+ * @author Quynh Xuan Nguyen <seriquynh@gmail.com>
+ */
 abstract class Loader implements LoaderInterface
 {
     /**
      * Filter files with a specific extension in the given directory.
      *
-     * @param string $dir
-     * @param string $ext
+     * @param string $directory
+     * @param string|array $extentions
      * @return Finder
      */
-    protected function filterFiles(string $dir, string $ext = '.php'): Finder
+    protected function filterFiles(string $directory, $extentions = '.php'): Finder
     {
+        $patterns = [];
+        foreach ((array) $extentions as $extention) {
+            $patterns[] = '*.'.ltrim($extention, '.');
+        }
         return Finder::create()
             ->files()
-            ->name('*.'.ltrim($ext, '.'))
-            ->in($dir)
+            ->name($patterns)
+            ->in($directory)
         ;
     }
 }
