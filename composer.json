@@ -17,7 +17,7 @@
     ],
     "require": {
         "php": "^7.1.3",
-        "sepiphy/contracts": "^0.6",
+        "sepiphy/contracts": "^0.7",
         "symfony/finder": "^4.3"
     },
     "autoload": {
