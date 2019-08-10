@@ -83,7 +83,9 @@ class Config implements ConfigInterface
     }
 
     /**
-     * @param  string|array  $resources
+     * Load configuration items from the resources.
+     *
+     * @param string|array $resources
      * @return void
      *
      * @throws RuntimeException
