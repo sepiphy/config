@@ -11,6 +11,7 @@
 
 namespace Sepiphy\PHPTools\Config;
 
+use RuntimeException;
 use Sepiphy\PHPTools\Config\Loaders\PhpLoader;
 use Sepiphy\PHPTools\Contracts\Config\ConfigInterface;
 use Sepiphy\PHPTools\Contracts\Config\LoaderInterface;
@@ -74,7 +75,7 @@ class Config implements ConfigInterface
     /**
      * {@inheritdoc}
      */
-    public function set(string $key, $value): self
+    public function set(string $key, $value)
     {
         $this->setItemsKey($this->items, $key, $value);
 
@@ -82,7 +83,10 @@ class Config implements ConfigInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param  string|array  $resources
+     * @return void
+     *
+     * @throws RuntimeException
      */
     public function load($resources): void
     {
@@ -137,9 +141,9 @@ class Config implements ConfigInterface
      * Set the LoaderInterface implementation.
      *
      * @param LoaderInterface $loader
-     * @return self
+     * @return $this
      */
-    public function setLoader(LoaderInterface $loader): self
+    public function setLoader(LoaderInterface $loader)
     {
         $this->loader = $loader;
 

@@ -11,6 +11,7 @@
 
 namespace Sepiphy\PHPTools\Config\Loaders;
 
+use RuntimeException;
 use Sepiphy\PHPTools\Contracts\Config\LoaderInterface;
 use Symfony\Component\Finder\Finder;
 
@@ -20,22 +21,77 @@ use Symfony\Component\Finder\Finder;
 abstract class Loader implements LoaderInterface
 {
     /**
-     * Filter files with a specific extension in the given directory.
+     * {@inheritdoc}
+     */
+    public function load($resources): array
+    {
+        $items = [];
+
+        $paths = is_array($resources) ? $resources : func_get_args();
+
+        foreach ($paths as $path) {
+            $path = realpath($path);
+
+            if ($path === false) {
+                continue;
+            }
+
+            if (is_file($path)) {
+                $name = pathinfo($path, PATHINFO_FILENAME);
+                $items[$name] = $this->parse($path);
+                continue;
+            }
+
+            foreach ($this->filter($dir = $path) as $extention => $files) {
+                foreach ($files as $file) {
+                    $name = $file->getBasename($extention);
+
+                    $fileDir = dirname($file->getRealPath());
+
+                    if ($fileDir === $dir) {
+                        $items[$name] = $this->parse($file->getRealPath());
+                    } else {
+                        $items[$file->getRelativePath()][$name] = $this->parse($file->getRealPath());
+                    }
+                }
+            }
+        }
+
+        return $items;
+    }
+
+    /**
+     * Filter files in the given directory.
      *
      * @param string $directory
-     * @param string|array $extentions
-     * @return Finder
+     * @return Finder[]
      */
-    protected function filterFiles(string $directory, $extentions = '.php'): Finder
+    protected function filter(string $directory): array
     {
-        $patterns = [];
-        foreach ((array) $extentions as $extention) {
-            $patterns[] = '*.'.ltrim($extention, '.');
+        $files = [];
+
+        foreach ($this->extensions() as $extention) {
+            $pattern = '*.'.ltrim($extention, '.');
+            $files[$extention] = Finder::create()->files()->name($pattern)->in($directory);
         }
-        return Finder::create()
-            ->files()
-            ->name($patterns)
-            ->in($directory)
-        ;
+
+        return $files;
     }
+
+    /**
+     * Get the supported extensions.
+     *
+     * @return string[]
+     */
+    abstract protected function extensions(): array;
+
+    /**
+     * Parse the given file.
+     *
+     * @param string $path
+     * @return array
+     *
+     * @throws RuntimeException
+     */
+    abstract protected function parse(string $path): array;
 }

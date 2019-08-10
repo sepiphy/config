@@ -11,6 +11,8 @@
 
 namespace Sepiphy\PHPTools\Config\Loaders;
 
+use RuntimeException;
+
 /**
  * @author Quynh Xuan Nguyen <seriquynh@gmail.com>
  */
@@ -19,40 +21,24 @@ class PhpLoader extends Loader
     /**
      * {@inheritdoc}
      */
-    public function load($resources): array
+    protected function extensions(): array
     {
-        $items = [];
+        return ['.php'];
+    }
 
-        $paths = is_array($resources) ? $resources : func_get_args();
+    /**
+     * {@inheritdoc}
+     */
+    protected function parse(string $path): array
+    {
+        $items = require $path;
 
-        foreach ($paths as $path) {
-            $path = realpath($path);
-
-            if ($path === false) {
-                continue;
-            }
-
-            if (is_file($path)) {
-                $name = pathinfo($path, PATHINFO_FILENAME);
-                $items[$name] = require $path;
-                continue;
-            }
-
-            $finder = $this->filterFiles($dir = $path);
-
-            foreach ($finder as $file) {
-                $name = $file->getBasename('.php');
-
-                $configFileDir = dirname($file->getRealPath());
-
-                if ($configFileDir === $dir) {
-                    $items[$name] = require $file->getRealPath();
-                } else {
-                    $items[$file->getRelativePath()][$name] = require $file->getRealPath();
-                }
-            }
+        if (is_array($items = require $path)) {
+            return $items;
         }
 
-        return $items;
+        throw new RuntimeException(
+            sprintf('The file [%s] must return an array.', $path)
+        );
     }
 }

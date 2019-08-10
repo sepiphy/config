@@ -11,6 +11,7 @@
 
 namespace Sepiphy\PHPTools\Config\Loaders;
 
+use RuntimeException;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -21,54 +22,22 @@ class YamlLoader extends Loader
     /**
      * {@inheritdoc}
      */
-    public function load($resources): array
+    protected function extensions(): array
     {
-        $items = [];
+        return ['.yml', '.yaml'];
+    }
 
-        $paths = is_array($resources) ? $resources : func_get_args();
-
-        foreach ($paths as $path) {
-            $path = realpath($path);
-
-            if ($path === false) {
-                continue;
-            }
-
-            if (is_file($path)) {
-                $name = pathinfo($path, PATHINFO_FILENAME);
-                $items[$name] = Yaml::parseFile($path);
-                continue;
-            }
-
-            $finder = $this->filterFiles($dir = $path, '.yml');
-
-            foreach ($finder as $file) {
-                $name = $file->getBasename('.yml');
-
-                $configFileDir = dirname($file->getRealPath());
-
-                if ($configFileDir === $dir) {
-                    $items[$name] = Yaml::parseFile($file->getRealPath());
-                } else {
-                    $items[$file->getRelativePath()][$name] = Yaml::parseFile($file->getRealPath());
-                }
-            }
-
-            $finder = $this->filterFiles($dir = $path, '.yaml');
-
-            foreach ($finder as $file) {
-                $name = $file->getBasename('.yaml');
-
-                $configFileDir = dirname($file->getRealPath());
-
-                if ($configFileDir === $dir) {
-                    $items[$name] = Yaml::parseFile($file->getRealPath());
-                } else {
-                    $items[$file->getRelativePath()][$name] = Yaml::parseFile($file->getRealPath());
-                }
-            }
+    /**
+     * {@inheritdoc}
+     */
+    protected function parse(string $path): array
+    {
+        if (class_exists('Symfony\Component\Yaml\Yaml')) {
+            return Yaml::parseFile($path);
         }
 
-        return $items;
+        throw new RuntimeException(
+            'Symfony\Component\Yaml\Yaml class doesn\'t exist. Run "composer require symfony/yaml".'
+        );
     }
 }
