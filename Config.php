@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Sepiphy\PHPTools\Config;
+namespace Sepiphy\Config;
 
 use RuntimeException;
-use Sepiphy\PHPTools\Config\Loaders\PhpLoader;
-use Sepiphy\PHPTools\Contracts\Config\ConfigInterface;
-use Sepiphy\PHPTools\Contracts\Config\LoaderInterface;
+use Sepiphy\Config\Loaders\PhpLoader;
+use Sepiphy\Contracts\Config\ConfigInterface;
+use Sepiphy\Contracts\Config\LoaderInterface;
 
 /**
  * @author Quynh Xuan Nguyen <seriquynh@gmail.com>

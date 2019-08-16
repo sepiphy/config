@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Sepiphy\PHPTools\Config\Loaders;
+namespace Sepiphy\Config\Loaders;
 
 use RuntimeException;
-use Sepiphy\PHPTools\Contracts\Config\LoaderInterface;
+use Sepiphy\Contracts\Config\LoaderInterface;
 use Symfony\Component\Finder\Finder;
 
 /**

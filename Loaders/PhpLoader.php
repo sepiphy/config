@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Sepiphy\PHPTools\Config\Loaders;
+namespace Sepiphy\Config\Loaders;
 
 use RuntimeException;
 

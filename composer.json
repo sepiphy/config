@@ -22,7 +22,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Sepiphy\\PHPTools\\Config\\": "./"
+            "Sepiphy\\Config\\": "./"
         }
     },
     "extra": {
