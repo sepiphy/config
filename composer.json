@@ -1,6 +1,6 @@
 {
     "name": "sepiphy/config",
-    "description": "The \"sepiphy/config\" package.",
+    "description": "The \"sepiphy/config\" package",
     "keywords": ["sepiphy", "tools", "phptools", "config"],
     "type": "library",
     "license": "MIT",
