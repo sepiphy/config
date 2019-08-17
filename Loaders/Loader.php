@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 
 /*
- * This file is part of the Sepiphy package.
+ * This file is part of the sepiphy/phptools package.
  *
  * (c) Quynh Xuan Nguyen <seriquynh@gmail.com>
  *
