@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-        "php": "^7.2.0",
+        "php": "^7.2",
         "sepiphy/contracts": "^0.7",
         "symfony/finder": "^4.3"
     },
@@ -31,7 +31,7 @@
         }
     },
     "suggest": {
-        "illuminate/support": "Required to use the env function (^5.8).",
+        "illuminate/support": "Required to use the env function (^6.0).",
         "symfony/yaml": "Required to use yaml configuration files (^4.3)."
     },
     "config": {
