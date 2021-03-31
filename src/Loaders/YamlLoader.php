@@ -12,18 +12,19 @@
 namespace Sepiphy\Config\Loaders;
 
 use RuntimeException;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * @author Quynh Xuan Nguyen <seriquynh@gmail.com>
  */
-class PhpLoader extends Loader
+class YamlLoader extends Loader
 {
     /**
      * {@inheritdoc}
      */
     protected function extensions(): array
     {
-        return ['.php'];
+        return ['.yml', '.yaml'];
     }
 
     /**
@@ -31,14 +32,12 @@ class PhpLoader extends Loader
      */
     protected function parse(string $path): array
     {
-        $items = require $path;
-
-        if (is_array($items = require $path)) {
-            return $items;
+        if (class_exists('Symfony\Component\Yaml\Yaml')) {
+            return Yaml::parseFile($path);
         }
 
         throw new RuntimeException(
-            sprintf('The file [%s] must return an array.', $path)
+            'Symfony\Component\Yaml\Yaml class doesn\'t exist. Try to run "composer require symfony/yaml".'
         );
     }
 }
