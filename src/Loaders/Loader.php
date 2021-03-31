@@ -12,8 +12,8 @@
 namespace Sepiphy\Config\Loaders;
 
 use RuntimeException;
-use Sepiphy\Contracts\Config\LoaderInterface;
 use Symfony\Component\Finder\Finder;
+use Sepiphy\Config\LoaderInterface;
 
 /**
  * @author Quynh Xuan Nguyen <seriquynh@gmail.com>

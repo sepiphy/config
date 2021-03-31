@@ -13,8 +13,8 @@ namespace Sepiphy\Config;
 
 use RuntimeException;
 use Sepiphy\Config\Loaders\PhpLoader;
-use Sepiphy\Contracts\Config\ConfigInterface;
-use Sepiphy\Contracts\Config\LoaderInterface;
+use Sepiphy\Config\ConfigInterface;
+use Sepiphy\Config\LoaderInterface;
 
 /**
  * @author Quynh Xuan Nguyen <seriquynh@gmail.com>
