@@ -39,7 +39,7 @@ Load files from the config directory.
 
 require '/path/to/vendor/autoload.php';
 
-$config = Config::withDir('/path/to/config')
+$config = Sepiphy\Config\Config::withDir('/path/to/config')
 
 $config->get('app.name'); // 'sepiphy/config'
 $config->get('app.version'); // 'v1.0.0'
