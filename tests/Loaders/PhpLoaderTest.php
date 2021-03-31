@@ -42,10 +42,7 @@ class PhpLoaderTest extends LoaderTest
         $path = __DIR__ . '/../fixtures/invalidconfig/a.php';
 
         $this->expectException(RuntimeException::class);
-
-        if (DIRECTORY_SEPARATOR !== '\\') {
-            $this->expectExceptionMessage(sprintf('The file [%s] must return an array.', $path));
-        }
+        $this->expectExceptionMessageMatches('/^The file \[(.*)\] must return an array\.$/');
 
         $this->loader->load($path);
     }
