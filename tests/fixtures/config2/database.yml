@@ -1,0 +1,6 @@
+# config/database.yml
+default: sqlite
+connections:
+    sqlite:
+        driver: 'sqlite'
+        database: ':memory:'

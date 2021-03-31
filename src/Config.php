@@ -13,6 +13,7 @@ namespace Sepiphy\Config;
 
 use RuntimeException;
 use Sepiphy\Config\Loaders\PhpLoader;
+use Sepiphy\Config\Loaders\YamlLoader;
 use Sepiphy\Config\ConfigInterface;
 use Sepiphy\Config\LoaderInterface;
 
@@ -24,9 +25,9 @@ class Config implements ConfigInterface
     /**
      * The LoaderInterface implementation.
      *
-     * @var LoaderInterface
+     * @var LoaderInterface[]
      */
-    protected $loader;
+    protected $loaders;
 
     /**
      * The configuration items.
@@ -39,13 +40,15 @@ class Config implements ConfigInterface
      * Create a new Config instance.
      *
      * @param array $items
-     * @param LoaderInterface|null $loader
      * @return void
      */
-    public function __construct(array $items = [], LoaderInterface $loader = null)
+    public function __construct(array $items = [])
     {
         $this->items = $items;
-        $this->loader = $loader ?: new PhpLoader();
+        $this->loaders = [
+            new PhpLoader(),
+            new YamlLoader(),
+        ];
     }
 
     /**
@@ -85,14 +88,16 @@ class Config implements ConfigInterface
     /**
      * Load configuration items from the resources.
      *
-     * @param string|array $resources
+     * @param string|string[] $resources
      * @return void
      *
      * @throws RuntimeException
      */
     public function load($resources): void
     {
-        $this->items = array_merge($this->items, $this->loader->load($resources));
+        foreach ($this->loaders as $loader) {
+            $this->items = array_merge($this->items, $loader->load($resources));
+        }
     }
 
     /**

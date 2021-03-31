@@ -17,15 +17,15 @@
     ],
     "require": {
         "php": ">=7.4",
-        "symfony/finder": "^4.4 || ^5.2"
+        "symfony/finder": "^4.4 || ^5.2",
+        "symfony/yaml": "^4.4 || ^5.2"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.18",
         "mockery/mockery": "^1.4",
         "phpstan/phpstan": "^0.12.82",
         "phpunit/phpunit": "^8.5.8",
-        "sepiphy/php-codesniffer": "^3.0",
-        "symfony/yaml": "^4.4 || ^5.2"
+        "sepiphy/php-codesniffer": "^3.0"
     },
     "autoload": {
         "psr-4": {

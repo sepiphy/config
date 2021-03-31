@@ -92,4 +92,29 @@ class ConfigTest extends TestCase
         $this->assertSame('foobar', $this->config->get('app.key'));
         $this->assertSame('on/off', $this->config->get('app.debug'));
     }
+
+    public function testLoadMethod()
+    {
+        $config = new Config();
+
+        $this->assertEquals([], $config->all());
+
+        $config->load(__DIR__.'/fixtures/config2');
+
+        $this->assertEquals([
+            'app' => [
+                'name' => 'Sepiphy',
+                'version' => 'v1.0.0',
+            ],
+            'database' => [
+                'default' => 'sqlite',
+                'connections' => [
+                    'sqlite' => [
+                        'driver' => 'sqlite',
+                        'database' => ':memory:',
+                    ]
+                ],
+            ],
+        ], $config->all());
+    }
 }
