@@ -16,10 +16,10 @@ Install `sepiphy/config` package via composer.
 Create a directory called `config` that contains a few php or yml files (each php file must return an array).
 
 ```php
-// config/app.yml
+// config/app.php
 return [
-    'name' => 'Sepiphy',
-    'version' => '0.6.0',
+    'name' => 'sepiphy/config',
+    'version' => 'v1.0.0',
 ];
 ```
 
@@ -39,12 +39,10 @@ Load files from the config directory.
 
 require '/path/to/vendor/autoload.php';
 
-$config = new Sepiphy\Config\Config();
+$config = Config::withDir('/path/to/config')
 
-$config->load('/path/to/config');
-
-$config->get('app.name'); // 'Sepiphy'
-$config->get('app.version'); // '0.6.0'
+$config->get('app.name'); // 'sepiphy/config'
+$config->get('app.version'); // 'v1.0.0'
 $config->get('database.default'); // 'sqlite'
 $config->get('database.connections.sqlite'); // ['driver' => 'sqlite', 'database' => ':memory:']
 ```

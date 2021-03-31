@@ -52,6 +52,17 @@ class Config implements ConfigInterface
     }
 
     /**
+     * Create a new instance and load configurations from a directory.
+     *
+     * @param string $dir
+     * @return ConfigInterface
+     */
+    public static function withDir(string $dir)
+    {
+        return (new self())->load($dir);
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function all(): array
@@ -89,15 +100,17 @@ class Config implements ConfigInterface
      * Load configuration items from the resources.
      *
      * @param string|string[] $resources
-     * @return void
+     * @return self
      *
      * @throws RuntimeException
      */
-    public function load($resources): void
+    public function load($resources): self
     {
         foreach ($this->loaders as $loader) {
             $this->items = array_merge($this->items, $loader->load($resources));
         }
+
+        return $this;
     }
 
     /**
@@ -132,29 +145,6 @@ class Config implements ConfigInterface
         if ($this->offsetExists($offset)) {
             unset($this->items[$offset]);
         }
-    }
-
-    /**
-     * Get the LoaderInterface implementation.
-     *
-     * @return LoaderInterface
-     */
-    public function getLoader(): LoaderInterface
-    {
-        return $this->loader;
-    }
-
-    /**
-     * Set the LoaderInterface implementation.
-     *
-     * @param LoaderInterface $loader
-     * @return $this
-     */
-    public function setLoader(LoaderInterface $loader)
-    {
-        $this->loader = $loader;
-
-        return $this;
     }
 
     /**

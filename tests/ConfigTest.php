@@ -117,4 +117,25 @@ class ConfigTest extends TestCase
             ],
         ], $config->all());
     }
+
+    public function testWithDirMethod()
+    {
+        $config = Config::withDir(__DIR__.'/fixtures/config2');
+
+        $this->assertEquals([
+            'app' => [
+                'name' => 'Sepiphy',
+                'version' => 'v1.0.0',
+            ],
+            'database' => [
+                'default' => 'sqlite',
+                'connections' => [
+                    'sqlite' => [
+                        'driver' => 'sqlite',
+                        'database' => ':memory:',
+                    ]
+                ],
+            ],
+        ], $config->all());
+    }
 }
