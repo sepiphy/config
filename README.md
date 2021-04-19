@@ -7,7 +7,7 @@
 
 ## Installation
 
-Install `sepiphy/config` package via composer.
+Install this package via composer:
 
     $ composer require sepiphy/config
 
