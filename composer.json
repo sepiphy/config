@@ -1,6 +1,6 @@
 {
     "name": "sepiphy/config",
-    "description": "A tool to quickly parse config from php or yml files.",
+    "description": "Parsing configuration from PHP or Yaml files",
     "keywords": ["sepiphy", "tools", "phptools", "config"],
     "type": "library",
     "license": "MIT",
@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-        "php": ">=7.4",
+        "php": "^7.4 | ^8.0",
         "symfony/finder": "^4.4 || ^5.2",
         "symfony/yaml": "^4.4 || ^5.2"
     },
