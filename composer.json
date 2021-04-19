@@ -37,10 +37,6 @@
             "dev-master": "1.0-dev"
         }
     },
-    "suggest": {
-        "illuminate/support": "Required to use the env function (^6.0).",
-        "symfony/yaml": "Required to use yaml configuration files (^4.3)."
-    },
     "config": {
         "sort-packages": true
     },
