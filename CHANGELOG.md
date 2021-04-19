@@ -1,3 +1,7 @@
+## v1.0.1 (2021-04-19)
+
+- Specify latest php versions `^7.4` and `^8.0`.
+
 ## v1.0.0 (2021-03-31)
 
 ### Added
