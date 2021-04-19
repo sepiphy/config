@@ -1,4 +1,4 @@
-# A tool to quickly parse config from php or yml files.
+# Parsing configuration from PHP or Yaml files
 
 ![Tests](https://img.shields.io/github/workflow/status/sepiphy/config/tests?label=tests)
 ![Packagist](https://img.shields.io/packagist/dt/sepiphy/config.svg)
